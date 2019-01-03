@@ -4,24 +4,26 @@
 
 #include <PalatisSoftPWM.h>
 
-SOFTPWM_DEFINE_PIN13_CHANNEL(0);  //Configure Arduino pin 13 as PWM channel 0
-SOFTPWM_DEFINE_OBJECT(1);
+SOFTPWM_DEFINE_PINA8_CHANNEL(0);  //Configure Arduino pin A8 as PWM channel 0
+SOFTPWM_DEFINE_PINA9_CHANNEL(1);
+SOFTPWM_DEFINE_PINA10_CHANNEL(2);
+SOFTPWM_DEFINE_PINA11_CHANNEL(3);
+SOFTPWM_DEFINE_PINA12_CHANNEL(4);
+SOFTPWM_DEFINE_PINA13_CHANNEL(5);
+SOFTPWM_DEFINE_PINA14_CHANNEL(6);
+SOFTPWM_DEFINE_PINA15_CHANNEL(7);
 
-const unsigned int fadeDuration = 1000;  // (ms)The length of time for to go from PWM value 0 to the highest level and back to 0 again. The maximum allowed value is 8388.
+SOFTPWM_DEFINE_OBJECT(1);        // may need to change DO first!
 
 void setup() {
   PalatisSoftPWM.begin(60);  // begin with 60 Hz PWM frequency
 }
 
 void loop() {
-  // fade from PWM value 0 to the highest value
-  for (byte value = 0; value < PalatisSoftPWM.PWMlevels() - 1; value++) {
-    delayMicroseconds(fadeDuration * 1000UL / PalatisSoftPWM.PWMlevels() / 2);
-    PalatisSoftPWM.set(0, value);
-  }
-  // fade back to PWM value 0
-  for (int value = PalatisSoftPWM.PWMlevels() - 1; value >= 0; value--) {
-    delayMicroseconds(fadeDuration * 1000UL / PalatisSoftPWM.PWMlevels() / 2);
-    PalatisSoftPWM.set(0, value);
-  }
+   for(int pin = 0; pin < 8; pin++)
+        for(int s = 63; s <= 255; s += 64)
+          {          // PWM: 255 = 5V
+            Palatis::SoftPWM.set(pin, s);     // sweeps 1.24, 2.5, 3.75 & 5 V
+            delay(500);
+          }
 }
