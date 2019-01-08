@@ -23,7 +23,7 @@ void loop() {
    for(int pin = 0; pin < 8; pin++)
         for(int s = 63; s <= 255; s += 64)
           {          // PWM: 255 = 5V
-            Palatis::SoftPWM.set(pin, s);     // sweeps 1.24, 2.5, 3.75 & 5 V
+            PalatisSoftPWM.set(pin, s);     // sweeps 1.24, 2.5, 3.75 & 5 V
             delay(500);
           }
 }
